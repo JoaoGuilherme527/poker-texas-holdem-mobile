@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // Regras para os tokens de recarga (Top-up QR Code)
+    match /topupTokens/{tokenId} {
+      allow read, create, delete: if isSignedIn();
+    }
+
+    // Regras dos usuários e subcoleções
+    match /users/{userId} {
+      allow read, create, update: if isOwner(userId);
+      allow delete: if false;
+
+      match /matches/{matchId} {
+        allow read, create: if isOwner(userId);
+      }
+
+      match /currentGame/{docId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      match /topups/{topupId} {
+        allow read, create: if isOwner(userId);
+      }
+    }
+  }
+}

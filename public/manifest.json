@@ -1,0 +1,25 @@
+{
+  "name": "Poker Texas Hold'em",
+  "short_name": "Poker Hold'em",
+  "description": "Jogo de Poker Texas Hold'em Mobile-First contra Bots",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#121513",
+  "theme_color": "#121513",
+  "icons": [
+    {
+      "src": "/logo/logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo/logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "maskable"
+    }
+  ]
+}

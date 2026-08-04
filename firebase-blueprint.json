@@ -1,0 +1,80 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile containing credits for poker.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "name": { "type": "string" },
+        "credits": { "type": "number", "description": "Current balance" },
+        "createdAt": { "type": "string", "format": "timestamp" },
+        "lastLoginAt": { "type": "string", "format": "timestamp" }
+      },
+      "required": ["email", "name", "credits", "createdAt", "lastLoginAt"]
+    },
+    "Match": {
+      "title": "Match",
+      "description": "A single poker match result.",
+      "type": "object",
+      "properties": {
+        "status": { "type": "string", "enum": ["won", "lost"] },
+        "winnings": { "type": "number", "description": "Net credit change for this match" },
+        "createdAt": { "type": "string", "format": "timestamp" }
+      },
+      "required": ["status", "winnings", "createdAt"]
+    },
+    "CurrentGame": {
+      "title": "Current Game",
+      "description": "Serialized game state",
+      "type": "object",
+      "properties": {
+         "stateData": { "type": "string" },
+         "updatedAt": { "type": "string", "format": "timestamp" }
+      },
+      "required": ["stateData", "updatedAt"]
+    },
+    "TopupToken": {
+      "title": "Topup Token",
+      "description": "Short-lived token for QR code top-ups",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "expiresAt": { "type": "number" }
+      },
+      "required": ["userId", "expiresAt"]
+    },
+    "TopupRecord": {
+      "title": "Topup Record",
+      "description": "Record of a credit topup",
+      "type": "object",
+      "properties": {
+        "amount": { "type": "number" },
+        "createdAt": { "type": "string", "format": "timestamp" }
+      },
+      "required": ["amount", "createdAt"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profile with their credits."
+    },
+    "users/{userId}/matches/{matchId}": {
+      "schema": { "$ref": "#/entities/Match" },
+      "description": "Match history for the user."
+    },
+    "users/{userId}/currentGame/{docId}": {
+      "schema": { "$ref": "#/entities/CurrentGame" },
+      "description": "The current paused/ongoing game state for the user."
+    },
+    "users/{userId}/topups/{topupId}": {
+      "schema": { "$ref": "#/entities/TopupRecord" },
+      "description": "A record of credit top-up."
+    },
+    "topupTokens/{tokenId}": {
+      "schema": { "$ref": "#/entities/TopupToken" },
+      "description": "Short-lived QR code token."
+    }
+  }
+}

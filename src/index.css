@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --animate-shimmer: shimmer 2.5s infinite linear;
+  --animate-scan: scan 2s infinite ease-in-out;
+  @keyframes shimmer {
+    0% { transform: translateX(-150%) skewX(-15deg); }
+    100% { transform: translateX(150%) skewX(-15deg); }
+  }
+  @keyframes scan {
+    0%, 100% { top: 0%; }
+    50% { top: 100%; }
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
